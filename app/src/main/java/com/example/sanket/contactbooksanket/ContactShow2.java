@@ -7,10 +7,12 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -54,9 +56,30 @@ public class ContactShow2 extends AppCompatActivity {
                 Intent i = new Intent(ContactShow2.this, EditUser.class);
                 i.putExtra("position", n);
                 i.putExtra("data", new DataPojo(dp.getId(), R.drawable.admin, firstnameShow+"", secondnameShow+"", phoneShow+""));
-                startActivity(i);
-                finish();
+                //startActivity(i);
+                startActivityForResult(i,1);
+                //finish();
+
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1)
+        {
+            Log.i("My ContactShow2 result=",data+"");
+            //Bundle extras = getIntent().getExtras();
+            //String newname = extras.getString("firstname");
+            //String newname = getIntent().getStringExtra("firstname");
+            String newfirstname = data.getStringExtra("firstname");
+            String newdsecondname = data.getStringExtra("secondname");
+            String newphone = data.getStringExtra("phone");
+
+            tvName.setText("Name = "+newfirstname+" "+newdsecondname);
+            tvPhone.setText("Phone Number = "+newphone);
+        }
+
     }
 }

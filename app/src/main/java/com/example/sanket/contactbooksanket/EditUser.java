@@ -1,6 +1,7 @@
 package com.example.sanket.contactbooksanket;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,10 +10,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+
 public class EditUser extends AppCompatActivity {
     EditText etFirstName3, etSecondName3, etPhone3;
     Button btnEdit3, btnCancel3, btnDelete3;
     DataPojo dp;
+    ArrayList<DataPojo> ddd;
+
     DatabaseManager mDatabase;
     String firstname, secondname, phone;
     @Override
@@ -27,7 +33,8 @@ public class EditUser extends AppCompatActivity {
         btnDelete3 = (Button) findViewById(R.id.btnDelete3);
         mDatabase = new DatabaseManager(this);
 
-
+        ddd = new ArrayList<>();
+        ddd = getIntent().getParcelableArrayListExtra("array");
 
         Bundle data = getIntent().getExtras();
         dp = (DataPojo)data.getParcelable("data"); //whole data pass
@@ -80,21 +87,56 @@ public class EditUser extends AppCompatActivity {
                     Toast.makeText(EditUser.this, "User Updated", Toast.LENGTH_SHORT).show();
                     //loadEmployeedFromDatabaseAgain();
                     Log.i("My Updated = ","done");
-                    Intent i = new Intent(EditUser.this, MainActivity.class);
-                    startActivity(i);
+
+
+                    //int iddd = mDatabase.getLastId();
+                    //Log.i("My added = ",iddd+""+firstname+secondname+phone);
+                    //Log.i("My list = ",ddd.toString());
+                    //Log.i("My list before size = ",ddd.size()+"");
+                    //ddd.add(new DataPojo(dp.getId(), R.drawable.admin, firstname, secondname, phone));
+                    //ddd.add(new DataPojo(iddd, R.drawable.admin, firstname, secondname, phone));
+                    //Log.i("My list after size = ",ddd.size()+"");
+
+                    //back = data save = new fill
+                    /*Intent returnIntent = new Intent();
+                    returnIntent.putExtra("newarray",ddd);
+                    setResult(RESULT_OK, returnIntent);
+                    finish();*/
+
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("firstname",firstname);
+                    returnIntent.putExtra("secondname",secondname);
+                    returnIntent.putExtra("phone",phone);
+                    setResult(RESULT_OK, returnIntent);
                     finish();
+
+
+                    //new activity start = work proper
+                    /*Intent i = new Intent(EditUser.this, MainActivity.class);
+                    startActivity(i);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    //finish();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        finishAffinity();
+                    }*/
                 }
                 else
                 {
                     Log.i("My Updated = ","not done");
+
                 }
             }
         });
         btnCancel3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(EditUser.this, MainActivity.class);
+                finish();
+                //reloadUserData();
+                /*Intent i = new Intent(EditUser.this, MainActivity.class);
                 startActivity(i);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    finishAffinity();  //main for close all activity = only main activity present
+                }*/
             }
         });
         btnDelete3.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +152,11 @@ public class EditUser extends AppCompatActivity {
                     Log.i("My Deleted = ","done");
                     Intent i = new Intent(EditUser.this, MainActivity.class);
                     startActivity(i);
-                    finish();
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    //finish();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        finishAffinity();
+                    }
                 }
                 else
                 {
@@ -121,5 +167,8 @@ public class EditUser extends AppCompatActivity {
         });
     }
 
+    public void reloadUserData()
+    {
 
+    }
 }

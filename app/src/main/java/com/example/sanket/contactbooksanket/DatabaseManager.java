@@ -74,15 +74,6 @@ public class DatabaseManager extends SQLiteOpenHelper
     {
         Log.i("DBHelper = ","getAllEmployee");
         i++;
-        /*long c;
-        SQLiteDatabase database = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_CODE, i);
-        values.put(KEY_NAME, "aaa");
-        values.put(KEY_EMAIL, "sanketramani0@gmail.com");
-        values.put(KEY_ADDRESS, "tirupati, rajkot");
-        c = database.insert(TABLE_EMP, null, values);*/
-
         String query = "select * from "+TABLE_NAME;
         ArrayList<DataPojo> users = new ArrayList<>();
         SQLiteDatabase database2 = getReadableDatabase();
@@ -106,7 +97,6 @@ public class DatabaseManager extends SQLiteOpenHelper
                 Log.i("DBHelper = ","Id = "+id);
                 Log.i("DBHelper = ","SecondName = "+secondname);
                 Log.i("DBHelper = ","Phone = "+phone);
-
                 users.add(e);
             }
         }

@@ -1,5 +1,6 @@
 package com.example.sanket.contactbooksanket;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -102,20 +103,30 @@ public class ContactAdd extends AppCompatActivity {  //for add record
         {
 
             Toast.makeText(getApplicationContext(), "User Added", Toast.LENGTH_SHORT).show();
-            //Intent i = new Intent(ContactAdd.this, MainActivity.class);
-            //startActivity(i);
-            int iddd = mDatabase.getLastId();
+            finish();
+
+
+
+            /*Intent i = new Intent(ContactAdd.this, MainActivity.class);
+            //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            //finish();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                finishAffinity();  //main for close all activity = only main activity present
+            }*/
+            //for not open activity again
+
+           /* int iddd = mDatabase.getLastId();
             Log.i("My added = ",iddd+""+firstname+secondname+phone);
             Log.i("My list = ",ddd.toString());
             Log.i("My list before size = ",ddd.size()+"");
 
-            //for not open activity again
             ddd.add(new DataPojo(iddd, R.drawable.admin, firstname, secondname, phone));
             Log.i("My list after size = ",ddd.size()+"");
             Intent returnIntent = new Intent();
             returnIntent.putExtra("newarray",ddd);
             setResult(RESULT_OK, returnIntent);
-            finish();
+            finish();*/
         }
         else
         {

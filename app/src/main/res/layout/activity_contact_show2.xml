@@ -31,8 +31,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:background="#ffccbb"
                 android:layout_gravity="bottom"
+                android:background="#ffccbb"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout

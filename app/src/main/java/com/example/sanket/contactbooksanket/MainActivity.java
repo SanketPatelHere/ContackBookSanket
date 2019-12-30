@@ -125,11 +125,9 @@ public class MainActivity extends AppCompatActivity {
                 //addEmployee();  //for add records
                 Intent i = new Intent(MainActivity.this, ContactAdd.class);
                 //startActivityForResult(i, 1);
-
                 i.putExtra("array",lst);
-                startActivityForResult(i,1);
-                //adapter.notifyDataSetChanged();  //not working = intent, used load data again
-                //loadEmployeesFromDatabase();
+                startActivity(i);
+
 
             }
         });
@@ -153,9 +151,14 @@ public class MainActivity extends AppCompatActivity {
                 lst = mDatabase.getAllUsers();
                 Log.i("My loaded list size2 = ",lst.size()+"");
 
+                //adapter.setFilter(lst);
                 adapter.notifyDataSetChanged();  //not working
                 //rv.getAdapter().notifyDataSetChanged();
                 Log.i("My refresh work = ","done");
+
+
+
+
             }
             if(resultCode==Activity.RESULT_CANCELED)
             {
@@ -165,18 +168,22 @@ public class MainActivity extends AppCompatActivity {
             //adapter.notifyDataSetChanged();
         }
     }
-    /*@Override
+    @Override
     protected void onResume() {
         super.onResume();
         if(rv.getAdapter()!=null)
         {
             Log.i("My resume = ","run");
+            lst = mDatabase.getAllUsers();
+            Log.i("My list size adapter2=",lst.size()+"");
+            adapter.reloadDatabase();
+
             //lst = mDatabase.getAllUsers();
             //adapter.notifyDataSetChanged();
             //rv.getAdapter().notifyDataSetChanged();
             //adapter.notifyDataSetChanged();  //not working
         }
-    }*/
+    }
     @Override
         public boolean onCreateOptionsMenu(Menu menu) {
             MenuInflater mi = getMenuInflater();

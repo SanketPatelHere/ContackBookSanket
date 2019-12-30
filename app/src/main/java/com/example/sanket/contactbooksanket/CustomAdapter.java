@@ -85,7 +85,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
         Log.i("My Name2 = ",dp.getFirstname()+" "+dp.getSecondname());
         Log.i("My Phone2 = ",dp.getPhone());
         //holder.imgv.setImageResource(dp.getImg());
-        holder.imgv.setImageResource(R.drawable.ic_launcher_background);
+        holder.imgv.setImageResource(R.drawable.admin);
         holder.tvName.setText(dp.getFirstname()+" "+dp.getSecondname());
         holder.tvPhone.setText(dp.getPhone());
 
@@ -119,44 +119,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
         Log.i("My mylst2 = ",mylst+"");
         notifyDataSetChanged();
     }
-
-    public void deleteEmployee(final int position, final DataPojo user)
+    public void reloadDatabase()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Are You Sure");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        Log.i("My b list size adapter=",mylst.size()+"");
+        mylst.clear();
+        mylst = mDatabase.getAllUsers();
+        Log.i("My a list size adapter=",mylst.size()+"");
+        notifyDataSetChanged();
+        Log.i("My a list size adapter=",mylst.size()+"");
 
-
-                DataPojo e = new DataPojo();
-                int myid = mylst.get(position).getId();
-
-                Log.i("My deleted myid=",myid+"");
-                Log.i("My deleted id = ",user.getId()+"");
-                int res = mDatabase.deleteUser(myid);
-                if(res!=-1)
-                {
-                    Log.i("My delete = ","yes");
-                    mylst.remove(position);
-                    notifyDataSetChanged();
-                    Log.i("My delete = ","done successfully");
-                }
-                else if(res!=-1)
-                {
-                    Log.i("My delete = ","no");
-                }
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Log.i("My delete = ","no");
-                Toast.makeText(activity, "Cancel Button Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
+
+
 
 }
