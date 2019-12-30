@@ -88,21 +88,6 @@ public class EditUser extends AppCompatActivity {
                     //loadEmployeedFromDatabaseAgain();
                     Log.i("My Updated = ","done");
 
-
-                    //int iddd = mDatabase.getLastId();
-                    //Log.i("My added = ",iddd+""+firstname+secondname+phone);
-                    //Log.i("My list = ",ddd.toString());
-                    //Log.i("My list before size = ",ddd.size()+"");
-                    //ddd.add(new DataPojo(dp.getId(), R.drawable.admin, firstname, secondname, phone));
-                    //ddd.add(new DataPojo(iddd, R.drawable.admin, firstname, secondname, phone));
-                    //Log.i("My list after size = ",ddd.size()+"");
-
-                    //back = data save = new fill
-                    /*Intent returnIntent = new Intent();
-                    returnIntent.putExtra("newarray",ddd);
-                    setResult(RESULT_OK, returnIntent);
-                    finish();*/
-
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("firstname",firstname);
                     returnIntent.putExtra("secondname",secondname);
@@ -130,6 +115,7 @@ public class EditUser extends AppCompatActivity {
         btnCancel3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(RESULT_CANCELED);
                 finish();
                 //reloadUserData();
                 /*Intent i = new Intent(EditUser.this, MainActivity.class);

@@ -177,11 +177,6 @@ public class MainActivity extends AppCompatActivity {
             lst = mDatabase.getAllUsers();
             Log.i("My list size adapter2=",lst.size()+"");
             adapter.reloadDatabase();
-
-            //lst = mDatabase.getAllUsers();
-            //adapter.notifyDataSetChanged();
-            //rv.getAdapter().notifyDataSetChanged();
-            //adapter.notifyDataSetChanged();  //not working
         }
     }
     @Override

@@ -64,21 +64,31 @@ public class ContactShow2 extends AppCompatActivity {
         });
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==1)
         {
             Log.i("My ContactShow2 result=",data+"");
-            //Bundle extras = getIntent().getExtras();
-            //String newname = extras.getString("firstname");
-            //String newname = getIntent().getStringExtra("firstname");
-            String newfirstname = data.getStringExtra("firstname");
-            String newdsecondname = data.getStringExtra("secondname");
-            String newphone = data.getStringExtra("phone");
+            if(resultCode==RESULT_OK)
+            {
+                Log.i("My result cancel = ",resultCode+"");
+                //Bundle extras = getIntent().getExtras();
+                //String newname = extras.getString("firstname");
+                //String newname = getIntent().getStringExtra("firstname");
+                String newfirstname = data.getStringExtra("firstname");
+                String newdsecondname = data.getStringExtra("secondname");
+                String newphone = data.getStringExtra("phone");
 
-            tvName.setText("Name = "+newfirstname+" "+newdsecondname);
-            tvPhone.setText("Phone Number = "+newphone);
+                tvName.setText("Name = " + newfirstname + " " + newdsecondname);
+                tvPhone.setText("Phone Number = " + newphone);
+            }
+            else
+            {
+                Log.i("My result cancel = ",resultCode+"");
+            }
         }
 
     }
