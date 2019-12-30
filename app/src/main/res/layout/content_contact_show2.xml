@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ContactShow2"
+    tools:showIn="@layout/activity_contact_show2">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ddccdd"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="#ffddff"
+        app:cardCornerRadius="10dp">
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:background="#ccddcc"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:hint="Phone"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+</androidx.core.widget.NestedScrollView>

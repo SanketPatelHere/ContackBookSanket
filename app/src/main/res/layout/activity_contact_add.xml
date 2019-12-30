@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ContactShow">
+    tools:context=".ContactAdd">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:background="@drawable/edit"
             />
     </RelativeLayout>
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,5 +87,5 @@
             </LinearLayout>
         </LinearLayout>
 </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 </LinearLayout>

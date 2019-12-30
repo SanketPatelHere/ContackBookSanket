@@ -27,7 +27,7 @@
             android:text="Ok"
             />
     </RelativeLayout>
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                 android:text="Delete Contact"
                 />
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 
 </LinearLayout>

@@ -82,6 +82,7 @@ public class EditUser extends AppCompatActivity {
                     Log.i("My Updated = ","done");
                     Intent i = new Intent(EditUser.this, MainActivity.class);
                     startActivity(i);
+                    finish();
                 }
                 else
                 {
@@ -109,6 +110,7 @@ public class EditUser extends AppCompatActivity {
                     Log.i("My Deleted = ","done");
                     Intent i = new Intent(EditUser.this, MainActivity.class);
                     startActivity(i);
+                    finish();
                 }
                 else
                 {

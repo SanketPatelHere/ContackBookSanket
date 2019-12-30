@@ -9,6 +9,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import static android.bluetooth.BluetoothHidDeviceAppQosSettings.MAX;
+
 public class DatabaseManager extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "ContactBookDatabase";
@@ -44,7 +46,7 @@ public class DatabaseManager extends SQLiteOpenHelper
         onCreate(sqLiteDatabase);
     }
 
-    public boolean  addEmployee(String firstname, String secondname, String phone, String joiningdate)
+    public boolean addEmployee(String firstname, String secondname, String phone, String joiningdate)
     {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_FIRSTNAME, firstname);
@@ -56,7 +58,16 @@ public class DatabaseManager extends SQLiteOpenHelper
         cv.put(COLUMN_PHONE, "9723031228");
         cv.put(COLUMN_JOIN_DATE, joiningdate);*/
         SQLiteDatabase db = getWritableDatabase();
+        //db.insert(TABLE_NAME, null , cv);
         return db.insert(TABLE_NAME, null, cv)!=-1;
+
+        /*String query = "SELECT last_insert_rowid()";
+        SQLiteDatabase database2 = getReadableDatabase();
+        Cursor c = database2.rawQuery(query, null);
+        int id = c.getInt(c.getColumnIndex(COLUMN_ID));
+        Log.i("My iddddddddd = ",id+"");
+        return id;*/
+        //retrun SELECT * from SQLITE_SEQUENCE;
     }
     static int i = 0;
     public ArrayList<DataPojo> getAllUsers()
@@ -125,5 +136,17 @@ public class DatabaseManager extends SQLiteOpenHelper
     {
         SQLiteDatabase db = getWritableDatabase();
         return db.delete(TABLE_NAME, COLUMN_ID+"=?", new String[]{String.valueOf(id)})==1;
+    }
+
+    public int getLastId()
+    {   int lastId = 0;
+        String query = "SELECT "+COLUMN_ID+" from "+TABLE_NAME+" order by "+COLUMN_ID+" DESC limit 1";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+
+        if (c != null && c.moveToFirst()) {
+            lastId = (int) c.getLong(0); //The 0 is the column index, we only have 1 column, so the index is 0
+        }
+        return lastId;
     }
 }

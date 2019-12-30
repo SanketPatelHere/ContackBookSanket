@@ -68,7 +68,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
                     //listener.myOnClick(v,10);
                     //listener.myOnClick((position+1), dp.getImg(), dp.getFirstname(), dp.getSecondname(), dp.getPhone());
                     //listener.myOnClick(imgv, tvFirstName, tvSecondName, tvPhone);
-                    //Intent i = new Intent(CustomAdapter.this, ContactShow.class);
+                    //Intent i = new Intent(CustomAdapter.this, ContactAdd.class);
                     Log.i("My itemview clicked = ","opened");
                     //listener.myOnClick(10, imgv, tvFirstName, tvSecondName, tvPhone);
 
@@ -103,7 +103,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
                 //notifyDataSetChanged();
 
 
-                //Intent i = new Intent(activity, ContactShow.class);
+                //Intent i = new Intent(activity, ContactAdd.class);
                 //startActivity(i);
                 //listener.myOnClick((position+1));
                 //listener.myOnClick((position+1), dp.getImg(), dp.getFirstname(), dp.getSecondname(), dp.getPhone());
