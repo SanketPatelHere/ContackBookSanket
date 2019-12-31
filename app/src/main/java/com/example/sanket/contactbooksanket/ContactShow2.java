@@ -50,8 +50,6 @@ public class ContactShow2 extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
 
                 Intent i = new Intent(ContactShow2.this, EditUser.class);
                 i.putExtra("position", n);
@@ -75,9 +73,6 @@ public class ContactShow2 extends AppCompatActivity {
             if(resultCode==RESULT_OK)
             {
                 Log.i("My result cancel = ",resultCode+"");
-                //Bundle extras = getIntent().getExtras();
-                //String newname = extras.getString("firstname");
-                //String newname = getIntent().getStringExtra("firstname");
                 String newfirstname = data.getStringExtra("firstname");
                 String newdsecondname = data.getStringExtra("secondname");
                 String newphone = data.getStringExtra("phone");

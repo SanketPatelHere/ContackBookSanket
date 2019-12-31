@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -111,14 +111,6 @@ public class MainActivity extends AppCompatActivity {
         rv.setAdapter(adapter);
         //adapter.notifyDataSetChanged();  //not working
 
-        //or
-        //fa = new CustomAdapter(this, lst);
-        /*fa = new CustomAdapter(this, lst, listener);
-        rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        rv.setAdapter(fa);*/
-
-
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    //not used
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -156,16 +150,12 @@ public class MainActivity extends AppCompatActivity {
                 //rv.getAdapter().notifyDataSetChanged();
                 Log.i("My refresh work = ","done");
 
-
-
-
             }
             if(resultCode==Activity.RESULT_CANCELED)
             {
                 Log.i("My result cancel = ",requestCode+"");
 
             }
-            //adapter.notifyDataSetChanged();
         }
     }
     @Override
@@ -175,16 +165,15 @@ public class MainActivity extends AppCompatActivity {
         {
             Log.i("My resume = ","run");
             lst = mDatabase.getAllUsers();
+            adapter.notifyDataSetChanged();  //for search list
             Log.i("My list size adapter2=",lst.size()+"");
-            adapter.reloadDatabase();
+            adapter.reloadDatabase();  //for refresh data
         }
     }
     @Override
         public boolean onCreateOptionsMenu(Menu menu) {
             MenuInflater mi = getMenuInflater();
             mi.inflate(R.menu.search_menu, menu);
-
-
             search = menu.findItem(R.id.search);
             //etsearch = (EditText)findViewById(R.id.etsearch);
             searchView  = (SearchView) MenuItemCompat.getActionView(search);
@@ -235,15 +224,8 @@ public class MainActivity extends AppCompatActivity {
                 case android.R.id.home:
                     finish();
                     return true;
-
-
                 default:
                     return super.onOptionsItemSelected(item);
             }
-
     }
-
-
-
-
 }

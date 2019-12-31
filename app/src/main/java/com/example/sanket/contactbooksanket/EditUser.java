@@ -82,10 +82,15 @@ public class EditUser extends AppCompatActivity {
                     etPhone3.requestFocus();
                     return;
                 }
+                if(phone.length()!=10)
+                {
+                    etPhone3.setError("Enter valid phone number - 0-10");
+                    etPhone3.requestFocus();
+                    return;
+                }
                 if(mDatabase.updateEmployee(dp.getId(), firstname, secondname, phone))
                 {
                     Toast.makeText(EditUser.this, "User Updated", Toast.LENGTH_SHORT).show();
-                    //loadEmployeedFromDatabaseAgain();
                     Log.i("My Updated = ","done");
 
                     Intent returnIntent = new Intent();
@@ -117,7 +122,6 @@ public class EditUser extends AppCompatActivity {
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
                 finish();
-                //reloadUserData();
                 /*Intent i = new Intent(EditUser.this, MainActivity.class);
                 startActivity(i);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -129,8 +133,6 @@ public class EditUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i("My id for delete = ",dp.getId()+"");
-                //deleteEmployee(position, dp);  //for delete
-                //notifyDataSetChanged();
                 int delete = mDatabase.deleteUser(dp.getId());
                 if(delete!=-1)
                 {
@@ -148,13 +150,8 @@ public class EditUser extends AppCompatActivity {
                 {
                     Log.i("My Deleted = ","not done");
                 }
-
             }
         });
     }
 
-    public void reloadUserData()
-    {
-
-    }
 }
