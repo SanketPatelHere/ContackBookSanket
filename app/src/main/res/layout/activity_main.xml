@@ -30,18 +30,7 @@
         app:contentInsetLeft="15dp"
         android:theme="@style/ToolbarTheme"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-        <!--<EditText
-            android:id="@+id/etsearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Search for"
-            android:drawableLeft="@drawable/search"
-            android:drawablePadding="10dp"
-            android:singleLine="true"
-            android:textColor="#ffffff"
-            android:cursorVisible="false"
-            android:paddingLeft="10dp"
-            />-->
+
     </androidx.appcompat.widget.Toolbar>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"

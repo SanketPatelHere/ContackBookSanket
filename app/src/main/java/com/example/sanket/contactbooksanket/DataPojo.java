@@ -27,6 +27,15 @@ public class DataPojo implements Parcelable{
         this.secondname = secondname;
         this.phone = phone;
     }
+   /* public int getId() {
+
+        if(!setId())
+        {
+
+        }
+        return id;
+    }*/
+
     public int getId() {
         return id;
     }
@@ -94,7 +103,6 @@ public class DataPojo implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        //dest.writeStringArray(new String[]{this.shopName, this.foodName});
         dest.writeStringArray(new String[]{this.id+"", this.img+"", this.firstname, this.secondname, this.phone});
     }
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator(){

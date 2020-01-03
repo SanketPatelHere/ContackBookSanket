@@ -2,18 +2,21 @@ package com.example.sanket.contactbooksanket;
 //import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
@@ -39,17 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
     MenuItem search;
     SearchView searchView;
-    //EditText etsearch;
-    DatabaseManager mDatabase;
+    //DatabaseManager mDatabase;
     FloatingActionButton btnAdd;
 
     CustomAdapter adapter;
+    SharedPreferences sharedPreferences;
 
     //for edit
     AlertDialog.Builder builder;
     AlertDialog dialog;
     String firstname = "", secondname = "", phone = "";
-
+    PreferenceHelper myPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,22 +61,36 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        myPref = new PreferenceHelper(getApplicationContext());
+        //sharedPreferences = getSharedPreferences("USER",MODE_PRIVATE);
         rv = (RecyclerView) findViewById(R.id.rv);
         btnAdd = (FloatingActionButton)findViewById(R.id.btnAdd);
         lst = new ArrayList<>();
-        /*lst.add(new DataPojo(R.drawable.ic_launcher_background, "aaaa", "patel", "5555"));
-        lst.add(new DataPojo(R.drawable.ic_launcher_foreground, "bbbb","kanabi", "6666"));
-        lst.add(new DataPojo(R.drawable.ic_launcher_background, "cccc","patel", "7777"));
-        lst.add(new DataPojo(R.drawable.ic_launcher_foreground, "dddd","kanabi", "8888"));
-        */
-        mDatabase = new DatabaseManager(this);
+        lst.add(new DataPojo(R.drawable.admin,"sanket", "ramani", "9723031228"));
+
+
+        //if (json.isEmpty())
+        //if(json.equalsIgnoreCase("null"))
+        fetchNewList();
+        /*if(sharedPreferences.getString("contactlist", null)==null)
+        {
+            //Toast.makeText(MainActivity.this,"There is something error1",Toast.LENGTH_LONG).show();
+            Log.i("My Error in pref = ","not change list");
+
+        }
+        else
+        {
+            ArrayList<DataPojo> fetchList = getArrayList("contactlist");
+            Log.i("My fetchList = ",fetchList.size()+"");
+            lst = fetchList;
+        }*/
 
 
 
+
+
+
+        //mDatabase = new DatabaseManager(this);
 
         listener = new MyClickListener() {
             @Override
@@ -85,40 +102,45 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void myOnClick(int position, int id, int imgUser, String firstname, String secondname, String userPhone) {
-                //my useful method
+                //my used method
                 Log.i("My new activity = ","opened");
 
-                Intent i = new Intent(MainActivity.this, ContactShow2.class);
+                Intent i = new Intent(MainActivity.this, ContactShowActivity.class);
                 i.putExtra("position", position);
+                i.putExtra("array", lst);
                 i.putExtra("data", new DataPojo(id, imgUser, firstname+"", secondname+"", userPhone+""));
                 startActivity(i);
+            }
 
-                /*Intent i = new Intent(MainActivity.this, EditUser.class);
+
+
+            @Override
+            public void myOnClick(int position, int imgUser, String firstname, String secondname, String userPhone) {
+                Log.i("My new activity = ","opened");
+
+                Intent i = new Intent(MainActivity.this, ContactShowActivity.class);
                 i.putExtra("position", position);
-                i.putExtra("data", new DataPojo(id, imgUser, firstname+"", secondname+"", userPhone+""));
-                startActivity(i);*/
-
-
+                i.putExtra("data", new DataPojo(position, imgUser, firstname+"", secondname+"", userPhone+""));
+                startActivity(i);
             }
         };
 
-
-
-
-        lst = mDatabase.getAllUsers();
-        adapter = new CustomAdapter(this, lst, listener, mDatabase);
+        adapter = new CustomAdapter(this, lst, listener);
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         rv.setAdapter(adapter);
-        //adapter.notifyDataSetChanged();  //not working
 
+       // lst = mDatabase.getAllUsers();
+        //adapter = new CustomAdapter(this, lst, listener, mDatabase);
+
+        //adapter.notifyDataSetChanged();
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //addEmployee();  //for add records
-                Intent i = new Intent(MainActivity.this, ContactAdd.class);
-                //startActivityForResult(i, 1);
+                Intent i = new Intent(MainActivity.this, ContactAddActivity.class);
                 i.putExtra("array",lst);
-                startActivity(i);
+                //startActivity(i);
+                startActivityForResult(i, 1);
+
 
 
             }
@@ -129,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i("My back onActivityResult=","called");
+
         if(requestCode==1)
         {
             Log.i("My request = ",requestCode+"");
@@ -136,18 +160,27 @@ public class MainActivity extends AppCompatActivity {
             {
                 Log.i("My result ok = ",requestCode+"");
                 Bundle b = getIntent().getExtras();
-                //ArrayList<DataPojo> newlist = (ArrayList<DataPojo>)data.getSerializableExtra("results");
-                //lst = getIntent().getExtras().getParcelableArrayList("newarray");
+
+                lst.clear();
+                //lst.add(new DataPojo(R.drawable.admin,"raj", "patel", "9723031228"));
+
                 lst = data.getParcelableArrayListExtra("newarray");
+                ////////////////////////
+                ///for store in sharef preference
+                myPref.saveArrayList(lst, "contactlist");
+
+
+
+                /////////////////////////
+                /*adapter = new CustomAdapter(this, lst, listener);
+                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                rv.setAdapter(adapter);*/
                 Log.i("My arrival list = ",lst+"");
                 Log.i("My arrival list size = ",lst.size()+"");
-                //lst = new ArrayList<>();
-                lst = mDatabase.getAllUsers();
-                Log.i("My loaded list size2 = ",lst.size()+"");
 
-                //adapter.setFilter(lst);
-                adapter.notifyDataSetChanged();  //not working
-                //rv.getAdapter().notifyDataSetChanged();
+             //   lst = mDatabase.getAllUsers();
+               // Log.i("My loaded list size2 = ",lst.size()+"");
+               // adapter.notifyDataSetChanged();  //not working
                 Log.i("My refresh work = ","done");
 
             }
@@ -161,21 +194,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(rv.getAdapter()!=null)
-        {
-            Log.i("My resume = ","run");
-            lst = mDatabase.getAllUsers();
-            adapter.notifyDataSetChanged();  //for search list
-            Log.i("My list size adapter2=",lst.size()+"");
-            adapter.reloadDatabase();  //for refresh data
-        }
+        Log.i("My back onResume = ","called");
+        fetchNewList();
+        adapter = new CustomAdapter(this, lst, listener);
+        rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        rv.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
+        
     }
     @Override
         public boolean onCreateOptionsMenu(Menu menu) {
             MenuInflater mi = getMenuInflater();
             mi.inflate(R.menu.search_menu, menu);
             search = menu.findItem(R.id.search);
-            //etsearch = (EditText)findViewById(R.id.etsearch);
             searchView  = (SearchView) MenuItemCompat.getActionView(search);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -197,7 +228,6 @@ public class MainActivity extends AppCompatActivity {
                         for(DataPojo row:lst)
                         {
                             Log.i("My row.getFoodName() = ",row.getName()+"");
-                            //if(row.getName().toLowerCase().contains(newText.toLowerCase()) || row.getPhone().toLowerCase().contains(newText.toLowerCase()))
                             if(row.getFirstname().toLowerCase().contains(newText.toLowerCase()) || row.getSecondname().toLowerCase().contains(newText.toLowerCase()) || row.getPhone().toLowerCase().contains(newText.toLowerCase()))
                             {
                                 filteredList.add(row);
@@ -205,9 +235,6 @@ public class MainActivity extends AppCompatActivity {
                             filterList = filteredList;
                         }
                     }
-
-
-                    //fa.setFilter(filterList);
                     adapter.setFilter(filterList);
                     return false;
                 }
@@ -220,12 +247,29 @@ public class MainActivity extends AppCompatActivity {
             int id = item.getItemId();
 
             switch (item.getItemId()) {
-                //int id = item.getItemId();
                 case android.R.id.home:
                     finish();
                     return true;
                 default:
                     return super.onOptionsItemSelected(item);
             }
-    }
+         }
+
+
+
+         public void fetchNewList()
+         {
+             if(myPref.getArrayList("contactlist")==null)
+             {
+                 //Toast.makeText(MainActivity.this,"There is something error",Toast.LENGTH_LONG).show();
+                 Log.i("My Error in pref = ","not change list");
+             }
+             else
+             {
+                 ArrayList<DataPojo> fetchList = myPref.getArrayList("contactlist");
+
+                 Log.i("My fetchList = ",fetchList.size()+"");
+                 lst = fetchList;
+             }
+         }
 }

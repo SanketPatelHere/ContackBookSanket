@@ -1,48 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ContactAdd">
+    android:background="@color/bg_contact"
+    tools:context=".ContactAddActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-        <Button
+        <ImageButton
             android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/close2"
-            />
-        <Button
+            android:background="@color/bg_contact"
+            android:src="@drawable/close2"
+            android:contentDescription="close" />
+        <ImageButton
             android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:background="@drawable/edit"
-            />
-    </RelativeLayout>
-    <ScrollView
-        android:id="@+id/sv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+            android:background="@color/bg_contact"
+            android:src="@drawable/edit"
+            android:contentDescription="save" />
 
-        <ImageView
-            android:id="@+id/imgv2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:src="@drawable/ic_launcher_background" />
+    </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingRight="10dp"
-                    android:hint="First Name"
+                    android:hint="Your Name"
                     android:textColor="#000"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -82,10 +68,9 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="5dp"
                     android:inputType="phone"
+                    android:maxLength="10"
                     android:hint="Phone"
                     android:textColor="#000" />
             </LinearLayout>
         </LinearLayout>
-</LinearLayout>
-    </ScrollView>
 </LinearLayout>
