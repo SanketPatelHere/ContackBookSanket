@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog.Builder builder;
     AlertDialog dialog;
     String firstname = "", secondname = "", phone = "";
-    PreferenceHelper myPref;
+    //PreferenceHelper myPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +56,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        myPref = new PreferenceHelper(getApplicationContext());
         rv = (RecyclerView) findViewById(R.id.rv);
         btnAdd = (FloatingActionButton)findViewById(R.id.btnAdd);
         lst = new ArrayList<>();
         lst.add(new DataPojo(R.drawable.admin,"sanket", "ramani", "9723031228"));
-
-        //for fetch list from sp
-        fetchNewList();
 
         listener = new MyClickListener() {
             @Override
@@ -73,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void myOnClick(int position, int id, int imgUser, String firstname, String secondname, String userPhone) {
-                //my used method
                 Log.i("My new activity = ","opened");
 
                 Intent i = new Intent(MainActivity.this, ContactShowActivity.class);
                 i.putExtra("position", position);
                 i.putExtra("array", lst);
                 i.putExtra("data", new DataPojo(id, imgUser, firstname+"", secondname+"", userPhone+""));
-                startActivity(i);
+                startActivityForResult(i, 1);
+
             }
         };
 
@@ -99,7 +95,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //not used
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.i("My back new intent","called");
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -112,10 +113,12 @@ public class MainActivity extends AppCompatActivity {
             {
                 Log.i("My result ok = ",requestCode+"");
                 Bundle b = getIntent().getExtras();
-                //lst.clear();
-                //lst = data.getParcelableArrayListExtra("newarray");
-                //for store in shared preference
-                //myPref.saveArrayList(lst, "contactlist");
+                lst.clear();
+                lst = data.getParcelableArrayListExtra("newarray");
+                adapter = new CustomAdapter(this, lst, listener);
+                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                rv.setAdapter(adapter);
+
                 Log.i("My arrival list size = ",lst.size()+"");
             }
             if(resultCode==Activity.RESULT_CANCELED)
@@ -129,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i("My back onResume = ","called");
-        fetchNewList();
         adapter.notifyDataSetChanged();
 
     }
@@ -158,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                         ArrayList<DataPojo> filteredList = new ArrayList<>();
                         for(DataPojo row:lst)
                         {
-                            Log.i("My row.getFoodName() = ",row.getName()+"");
+                            Log.i("My row.getName() = ",row.getName()+"");
                             if(row.getFirstname().toLowerCase().contains(newText.toLowerCase()) || row.getSecondname().toLowerCase().contains(newText.toLowerCase()) || row.getPhone().toLowerCase().contains(newText.toLowerCase()))
                             {
                                 filteredList.add(row);
@@ -173,21 +175,5 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-         public void fetchNewList()
-         {
-             if(myPref.getArrayList("contactlist")==null)
-             {
-                 Log.i("My Error in pref = ","not change list");
-             }
-             else
-             {
-                 lst.clear();  //if add or update
-                 ArrayList<DataPojo> fetchList = myPref.getArrayList("contactlist");
-                 Log.i("My fetchList = ",fetchList.size()+"");
-                 //lst = fetchList;
-                 lst.addAll(fetchList);
-                 myPref.saveArrayList(lst, "contactlist");
 
-             }
-         }
 }
