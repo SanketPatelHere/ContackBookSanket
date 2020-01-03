@@ -22,7 +22,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
     Activity activity;
     ArrayList<DataPojo> mylst;
     MyClickListener listener;
-    //DatabaseManager mDatabase;
 
     public CustomAdapter(Activity activity, ArrayList<DataPojo> mylst) {
         this.activity = activity;
@@ -33,12 +32,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
         this.mylst = mylst;
         this.listener = listener;
     }
-    /*public CustomAdapter(Activity activity, ArrayList<DataPojo> mylst, MyClickListener listener, DatabaseManager mDatabase) {
-        this.activity = activity;
-        this.mylst = mylst;
-        this.listener = listener;
-        this.mDatabase = mDatabase;
-    }*/
     @Override
     public int getItemCount() {
         return this.mylst.size();
@@ -75,21 +68,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
     public void onBindViewHolder(CustomAdapter.ContactViewHolder holder, final int position) {
         final DataPojo dp = this.mylst.get(position);
 
-        Log.i("My Img2 = ",dp.getImg()+"");
-        Log.i("My Name2 = ",dp.getFirstname()+" "+dp.getSecondname());
-        Log.i("My Phone2 = ",dp.getPhone());
-        //holder.imgv.setImageResource(dp.getImg());
         holder.imgv.setImageResource(R.drawable.admin);
         holder.tvName.setText(dp.getFirstname()+" "+dp.getSecondname());
         holder.tvPhone.setText(dp.getPhone());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("My itemview clicked2=","opened");
-                Log.i("My itemview position=",(position)+"");
-                Log.i("My itemview id=",dp.getId()+"");
                 listener.myOnClick((position),0, R.drawable.ic_launcher_background, dp.getFirstname(), dp.getSecondname(), dp.getPhone());
-                //listener.myOnClick((position+1), R.drawable.ic_launcher_background, dp.getFirstname(), dp.getSecondname(), dp.getPhone());
             }
         });
     }
@@ -100,17 +85,5 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
         Log.i("My mylst2 = ",this.mylst+"");
         notifyDataSetChanged();
     }
-    public void reloadDatabase()
-    {
-        Log.i("My b list size adapter=",mylst.size()+"");
-        mylst.clear();
-        //mylst = mDatabase.getAllUsers();
-        Log.i("My a list size adapter=",mylst.size()+"");
-        notifyDataSetChanged();
-        Log.i("My a list size adapter=",mylst.size()+"");
-
-    }
-
-
 
 }

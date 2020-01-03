@@ -36,6 +36,7 @@ public class PreferenceHelper  {
     {
         Gson gson = new Gson();
         String json = pref.getString(key, null);
+        //Log.i("My json = ",json+"");
         Type type = new TypeToken<ArrayList<DataPojo>>(){}.getType();
         Log.i("My pref getArrayList = ","called");
         return gson.fromJson(json, type);

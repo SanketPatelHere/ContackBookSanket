@@ -22,8 +22,6 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:background="#034d4e"
-
-        android:fitsSystemWindows="true"
         app:subtitleTextColor="#ffffff"
         app:titleTextColor="#ffffff"
         app:contentInsetStart="15dp"
@@ -36,7 +34,6 @@
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ddccaa"
             android:layout_below="@+id/toolbar"
             android:layout_weight="1">
         </androidx.recyclerview.widget.RecyclerView>
