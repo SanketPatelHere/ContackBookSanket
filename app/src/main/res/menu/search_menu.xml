@@ -7,6 +7,4 @@
         app:showAsAction="ifRoom|withText"
         android:title="What are ?"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
-
-
 </menu>
