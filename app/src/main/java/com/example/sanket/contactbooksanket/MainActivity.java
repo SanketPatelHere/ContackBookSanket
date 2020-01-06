@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     DataPojo dp;
     CustomAdapter fa;
     MyClickListener listener;
+    public static int BACK_PRESSED_CLICKED = 1;
 
     MenuItem search;
     SearchView searchView;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btnAdd = (FloatingActionButton)findViewById(R.id.btnAdd);
         lst = new ArrayList<>();
         lst.add(new DataPojo(R.drawable.admin,"sanket", "ramani", "9723031228"));
+        lst.add(new DataPojo(R.drawable.admin,"raj", "patel", "9723031228"));
 
         listener = new MyClickListener() {
             @Override
@@ -74,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, ContactShowActivity.class);
                 i.putExtra("position", position);
                 i.putExtra("array", lst);
+                final ArrayList<String> arr = new ArrayList<>();
+                //final ArrayList<DataPojo> arr = new ArrayList<>();
+                //arr.add(new DataPojo(position,0,firstname+"",secondname+"",phone+""));
+                arr.add(firstname);
+                arr.add(secondname);
+                arr.add(userPhone);
+                i.putExtra("array_list", arr);
                 i.putExtra("data", new DataPojo(id, imgUser, firstname+"", secondname+"", userPhone+""));
                 startActivityForResult(i, 1);
 
@@ -112,14 +121,32 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode== Activity.RESULT_OK)
             {
                 Log.i("My result ok = ",requestCode+"");
-                Bundle b = getIntent().getExtras();
-                lst.clear();
-                lst = data.getParcelableArrayListExtra("newarray");
-                adapter = new CustomAdapter(this, lst, listener);
-                rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-                rv.setAdapter(adapter);
-
+                if(data.getExtras()!=null)
+                {
+                    int rposition = data.getExtras().getInt("rposition");
+                    DataPojo dp3 = (DataPojo)data.getExtras().getParcelable("data"); //whole data pass
+                    Log.i("My dp rposition = ",rposition+"");
+                    Log.i("My dp name = ",dp3.getFirstname());
+                    lst.set(rposition, new DataPojo(rposition,1,dp3.getFirstname(), dp3.getSecondname(), dp3.getPhone()));
+                }
                 Log.i("My arrival list size = ",lst.size()+"");
+            }
+            else if(resultCode==2)
+            {
+                Log.i("My add =",resultCode+"");
+                DataPojo dp3 = (DataPojo)data.getExtras().getParcelable("data"); //whole data pass
+                Log.i("My dp add name = ",dp3.getFirstname());
+
+                lst.add(new DataPojo(1,dp3.getFirstname(), dp3.getSecondname(), dp3.getPhone()));
+                Toast.makeText(this, "Contact added successfully", Toast.LENGTH_SHORT).show();
+
+            }
+            else if(resultCode==3)
+            {
+                Log.i("My result delete = ",requestCode+"");
+                int rposition = data.getExtras().getInt("rposition");
+                Log.i("My dp rposition = ",rposition+"");
+                lst.remove(rposition);
             }
             if(resultCode==Activity.RESULT_CANCELED)
             {
@@ -133,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Log.i("My back onResume = ","called");
         adapter.notifyDataSetChanged();
-
+        MainActivity.BACK_PRESSED_CLICKED = 1;
     }
     @Override
         public boolean onCreateOptionsMenu(Menu menu) {
