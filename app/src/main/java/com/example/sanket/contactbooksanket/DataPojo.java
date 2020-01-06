@@ -2,9 +2,10 @@ package com.example.sanket.contactbooksanket;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class DataPojo implements Parcelable{
-    int id;
+    long id;
     int img;
     String firstname, secondname, name, phone;
     public DataPojo() {
@@ -20,7 +21,7 @@ public class DataPojo implements Parcelable{
         this.secondname = secondname;
         this.phone = phone;
     }
-    public DataPojo(int id, int img, String firstname, String secondname, String phone) {
+    public DataPojo(long id, int img, String firstname, String secondname, String phone) {
         this.id = id;
         this.img = img;
         this.firstname = firstname;
@@ -28,12 +29,13 @@ public class DataPojo implements Parcelable{
         this.phone = phone;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
+
     }
 
     public int getImg() {
@@ -81,7 +83,7 @@ public class DataPojo implements Parcelable{
     {
         String data[] = new String[5];
         in.readStringArray(data);
-        this.id = Integer.parseInt(data[0]);
+        this.id = Long.parseLong(data[0]);
         this.img = Integer.parseInt(data[1]);
         this.firstname = data[2];
         this.secondname = data[3];

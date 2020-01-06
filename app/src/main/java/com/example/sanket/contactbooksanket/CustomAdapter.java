@@ -56,13 +56,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Log.i("My itemview clicked = ","opened");
 
                 }
             });
         }
     }
+
 
     @Override
     public void onBindViewHolder(CustomAdapter.ContactViewHolder holder, final int position) {
@@ -74,7 +74,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.myOnClick((position),0, R.drawable.ic_launcher_background, dp.getFirstname(), dp.getSecondname(), dp.getPhone());
+
+                listener.myOnClick((position),dp.getId(), R.drawable.ic_launcher_background, dp.getFirstname(), dp.getSecondname(), dp.getPhone());
             }
         });
     }
@@ -82,7 +83,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ContactVie
     public void setFilter(ArrayList<DataPojo> f)
     {
         this.mylst = f;
+
         Log.i("My mylst2 = ",this.mylst+"");
+        Log.i("My mylst2 position = ",this.mylst.size()+"");
         notifyDataSetChanged();
     }
 
